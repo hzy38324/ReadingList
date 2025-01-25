@@ -34,7 +34,7 @@ const addItem = async (e) => {
     
     if (isUrl) {
       const title = await fetchTitle(newItem);
-      itemText = `[网页] ${title}`;
+      itemText = title;
     }
     
     setItems([...items, { text: itemText, completed: false, url: isUrl ? newItem : null }]);
@@ -69,7 +69,13 @@ const addItem = async (e) => {
         {items.map((item, index) => (
           <li key={index} className={item.completed ? 'completed' : ''}>
             <span onClick={() => toggleComplete(index)}>
-              {item.text}
+              {item.url ? (
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  {item.text}
+                </a>
+              ) : (
+                item.text
+              )}
             </span>
             <button onClick={() => removeItem(index)}>×</button>
           </li>
